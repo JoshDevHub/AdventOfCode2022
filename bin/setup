@@ -3,8 +3,14 @@
 require "fileutils"
 require "rest-client"
 
+def current_day_est
+  est_offset = "-05:00"
+  curr_est = Time.now(in: est_offset)
+  curr_est.day.to_s
+end
+
 # checks for command line arg for day name
-day_num = ARGV[0]
+day_num = ARGV[0] || current_day_est
 missing_arg_msg = "Please enter a valid day number as a command line arg"
 raise ArgumentError, missing_arg_msg unless ("1".."25").include?(day_num)
 
@@ -21,7 +27,8 @@ FileUtils.touch("puzzle.rb")
 FileUtils.touch("test.txt")
 
 # GET puzzle input for day from advent of code & write to txt file
-url = "https://adventofcode.com/2022/day/#{day_num}/input"
+year = File.read(".year").chomp
+url = "https://adventofcode.com/#{year}/day/#{day_num}/input"
 response =
   RestClient.get(
     url,
