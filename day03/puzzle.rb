@@ -15,6 +15,6 @@ def calculate_priority_for(char_list)
   end
 end
 
-p calculate_priority_for(error_chars) #p1-> 7763
+p calculate_priority_for(error_chars) # p1-> 7763
 
-p calculate_priority_for(badge_chars) #p2-> 2569
+p calculate_priority_for(badge_chars) # p2-> 2569
