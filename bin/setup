@@ -27,7 +27,7 @@ FileUtils.touch("puzzle.rb")
 FileUtils.touch("test.txt")
 
 # GET puzzle input for day from advent of code & write to txt file
-year = File.read(".year").chomp
+year = File.read("../.year").chomp
 url = "https://adventofcode.com/#{year}/day/#{day_num}/input"
 response =
   RestClient.get(
