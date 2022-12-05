@@ -6,9 +6,8 @@ ascii_stacks, INSTRUCTIONS = File.read(*ARGV)
 
 matrix_stacks = ascii_stacks.map(&:chars).transpose.map(&:reverse)
 stack_collection = matrix_stacks.filter_map do |line|
-  next if [" ", "[", "]"].include?(line.first)
-
-  line.reduce([]) { |stack, char| /[A-Z]/.match?(char) ? stack << char : stack }
+  input_chars = line.join.scan(/[A-Z]/)
+  input_chars unless input_chars.empty?
 end
 
 move_by_one = lambda do |stacks, count, from, to|
