@@ -28,6 +28,6 @@ def execute_instructions(stacks, &block)
   stacks_copy.reduce(+"") { |out, st| out + st.last }
 end
 
-p execute_instructions(stack_collection, &move_by_one) # p1->
+p execute_instructions(stack_collection, &move_by_one) # p1-> "WCZTHTMPS"
 
-p execute_instructions(stack_collection, &move_by_multiples) # p2->
+p execute_instructions(stack_collection, &move_by_multiples) # p2-> "BLSGJSDTS"
