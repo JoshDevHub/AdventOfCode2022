@@ -24,7 +24,7 @@ def execute_instructions(stacks, &block)
     count, from, to = move.scan(/\d+/).map(&:to_i)
     block.call(stacks_copy, count, from - 1, to - 1)
   end
-  stacks_copy.reduce(+"") { |out, st| out + st.last }
+  stacks_copy.map(&:last).join
 end
 
 p execute_instructions(stack_collection, &move_by_one) # p1-> "WCZTHTMPS"
