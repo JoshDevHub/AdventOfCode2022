@@ -43,13 +43,12 @@ input[1..].each do |line|
   end
 end
 
-def size_of_dirs_under_100k(node, size = 0)
-  return size unless node.dir?
+def dir_sizes(node, sizes = [])
+  return sizes unless node.dir?
 
-  size += node.size if node.size <= 100_000
-
-  node.children.reduce(size) do |memo, child|
-    size_of_dirs_under_100k(child, memo)
+  sizes.push(node.size)
+  node.children.reduce(sizes) do |memo, child|
+    dir_sizes(child, memo)
   end
 end
 
@@ -58,16 +57,6 @@ UNUSED_SPACE = TOTAL_SPACE - tree.size
 SPACE_NEEDED = 30_000_000
 MIN_DEL_SIZE = SPACE_NEEDED - UNUSED_SPACE
 
-def search_for_smallest_delete(node, smallest = Float::INFINITY)
-  return smallest unless node.dir?
-  return smallest if node.size < MIN_DEL_SIZE
+p dir_sizes(tree).select { |size| size <= 100_000 }.sum # p1-> 1915606
 
-  smallest = [smallest, node.size].min
-  node.children.reduce(smallest) do |memo, child|
-    search_for_smallest_delete(child, memo)
-  end
-end
-
-p size_of_dirs_under_100k(tree) # p1-> 1915606
-
-p search_for_smallest_delete(tree) # p2-> 5025657
+p dir_sizes(tree).select { |size| size > MIN_DEL_SIZE }.min # p2-> 5025657
