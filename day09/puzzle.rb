@@ -38,7 +38,7 @@ def count_uniq_tail_positions(knot)
 end
 
 short_knot = Array.new(2) { Point.new(0, 0) }
-p count_uniq_tail_positions(short_knot)
+p count_uniq_tail_positions(short_knot) # p1-> 5779
 
 long_knot = Array.new(10) { Point.new(0, 0) }
-p count_uniq_tail_positions(long_knot)
+p count_uniq_tail_positions(long_knot) # p2-> 2331
