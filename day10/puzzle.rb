@@ -15,7 +15,7 @@ end
 
 CYCLES_LIST = [220, 180, 140, 100, 60, 20].freeze
 
-signal_strengths = CYCLES_LIST.sum { |cycle| cycle * x_at_each_cycle[cycle - 1] }
+signal_strengths = CYCLES_LIST.sum { |cycle| cycle * x_at_each_cycle[cycle] }
 
 p signal_strengths # p1-> 17940
 
