@@ -15,7 +15,7 @@ for (const [instruction, value] of puzzleInput) {
   x += Number(value);
 }
 
-CYCLE_LIST = [220, 180, 140, 100, 60, 20];
+const CYCLE_LIST = [220, 180, 140, 100, 60, 20];
 const signalStrengths = CYCLE_LIST.reduce((sum, cycle) => {
   return sum + cycle * xValueCollection[cycle];
 }, 0)
