@@ -25,7 +25,7 @@ end
 
 CRT_ROWS = [200, 160, 120, 80, 40].freeze
 
-flat_grid = Array.new(240) { "." }
+flat_grid = ["."] * 240
 
 crt = flat_grid.map.with_index do |px, cycle|
   height_correction = CRT_ROWS.find { |row| cycle > row - 1 } || 0
