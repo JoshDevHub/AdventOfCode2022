@@ -11,13 +11,13 @@ for (const [instruction, value] of puzzleInput) {
   xValueCollection.push(x);
   if (instruction === "noop") continue;
 
+  xValueCollection.push(x)
   x += Number(value);
-  xValueCollection.push(x);
 }
 
 CYCLE_LIST = [220, 180, 140, 100, 60, 20];
 const signalStrengths = CYCLE_LIST.reduce((sum, cycle) => {
-  return sum + cycle * xValueCollection[cycle - 2];
+  return sum + cycle * xValueCollection[cycle - 1];
 }, 0)
 
 console.log(signalStrengths); // Part 1
@@ -34,8 +34,7 @@ const crt = flatGrid.map((px, cycle) => {
   const heightCorrection = CRT_ROWS.find((row) => cycle > row - 1) || 0;
   const drawPx = cycle - heightCorrection;
 
-  const cycleIdx = Math.max(cycle - 1, 0);
-  const currentX = xValueCollection[cycleIdx];
+  const currentX = xValueCollection[cycle];
   return drawPixelIsInSprite(drawPx, currentX) ? "#" : px;
 })
 
