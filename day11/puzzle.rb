@@ -12,11 +12,11 @@ class Monkey
   end
 
   def inspect_items
-    throw_list = @items.reduce([]) do |list, item|
+    throw_list = @items.map do |item|
       @inspect_count += 1
       new_item = operate_on_item(item)
       throw_target = (new_item % @mod_test).zero? ? @throw_group[0] : @throw_group[1]
-      list << [throw_target, new_item]
+      [throw_target, new_item]
     end
     @items.clear
     throw_list
