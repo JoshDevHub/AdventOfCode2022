@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 def compare_values(a, b)
   case [a, b]
   in [Integer, Integer] then a <=> b
@@ -16,7 +18,7 @@ def compare_values(a, b)
   end
 end
 
-input = File.read(*ARGV).split.map { |packet| eval(packet) }
+input = File.read(*ARGV).split.map { |packet| JSON.parse(packet) }
 
 correct_indices = input.each_slice(2).filter_map.with_index do |pair, idx|
   comp = compare_values(*pair)
