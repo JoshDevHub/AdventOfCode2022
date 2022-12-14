@@ -30,7 +30,7 @@ def drop_sand(x = 500, y = 0)
   end
   return [x, y] if !drop_coord || out_of_bounds?(y)
 
-  move_sand(*drop_coord)
+  drop_sand(*drop_coord)
 end
 
 @sand_pile = Set.new
@@ -53,9 +53,9 @@ UPDATED_FLOOR = FLOOR + 2
 ORIGIN = [500, 0].freeze
 
 loop do
-  new_sand_coord = move_sand
+  new_sand_coord = drop_sand
   @sand_pile << new_sand_coord
-  break if new_sand_coord == origin
+  break if new_sand_coord == ORIGIN
 end
 
 p @sand_pile.size # p2-> 26831
