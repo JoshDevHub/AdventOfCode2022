@@ -3,10 +3,9 @@
 input = File.readlines(*ARGV, chomp: true)
             .map { |l| l.scan(/\d+|-\d+/).map(&:to_i) }
 
-@sensor_map = {}
-input.each do |(sx, sy, bx, by)|
+@sensor_map = input.each_with_object({}) do |(sx, sy, bx, by), map|
   manhattan_dist = (sx - bx).abs + (sy - by).abs
-  @sensor_map[[sx, sy]] = manhattan_dist
+  map[[sx, sy]] = manhattan_dist
 end
 
 def merge(intervals)
