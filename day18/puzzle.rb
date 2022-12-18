@@ -5,19 +5,17 @@ require "set"
 input = File.readlines(*ARGV, chomp: true)
             .map { |line| line.scan(/\d+/).map(&:to_i) }
 
-Cube = Struct.new(:x, :y, :z) do
-  def adjacent_with?(other)
-    ((other.x + 1 == x || other.x - 1 == x) && (other.y == y && other.z == z)) ||
-      ((other.y + 1 == y || other.y - 1 == y) && (other.x == x && other.z == z)) ||
-      ((other.z + 1 == z || other.z - 1 == z) && (other.x == x && other.y == y))
-  end
+DIRECTIONS = [
+  [1, 0, 0], [-1, 0, 0],
+  [0, 1, 0], [0, -1, 0],
+  [0, 0, 1], [0, 0, -1]
+].freeze
 
+Cube = Struct.new(:x, :y, :z) do
   def create_adjacents
-    [
-      Cube.new(x, y, z + 1), Cube.new(x, y, z - 1),
-      Cube.new(x, y + 1, z), Cube.new(x, y - 1, z),
-      Cube.new(x + 1, y, z), Cube.new(x - 1, y, z)
-    ]
+    DIRECTIONS.map do |dx, dy, dz|
+      Cube.new(x + dx, y + dy, z + dz)
+    end
   end
 end
 
@@ -31,18 +29,17 @@ input.each do |x, y, z|
   @cube_set << new_cube
 end
 
-p side_count
+p side_count # p1-> 4608
 
 max_x, max_y, max_z = input.transpose.map(&:max)
 all_cubes = []
-(0..max_x).each do |x|
-  (0..max_y).each do |y|
-    (0..max_z).each do |z|
+(0...max_x).each do |x|
+  (0...max_y).each do |y|
+    (0...max_z).each do |z|
       all_cubes << Cube.new(x, y, z)
     end
   end
 end
-
 
 trapped = Set.new
 def trapped?(cube)
@@ -52,7 +49,8 @@ def trapped?(cube)
 
   until q.empty?
     curr = q.shift
-    return false if [curr.x, curr.y, curr.z].min < -1 || [curr.x, curr.y, curr.z].max > 22
+    return false if [curr.x, curr.y, curr.z].min.negative? ||
+                    [curr.x, curr.y, curr.z].max > 21
 
     neighbors = curr.create_adjacents
     neighbors.each do |n|
@@ -78,5 +76,5 @@ area = 0
     area += 1 if !trapped.include?(n) && !@cube_set.include?(n)
   end
 end
-p area
 
+p area #-> 2652
